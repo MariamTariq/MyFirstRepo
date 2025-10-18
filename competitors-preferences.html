@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competitor Edge & Preferences Demo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar (same as grow-smarter.html) -->
+  <nav class="demo-topbar">
+    <a href="intro.html" class="back-btn">← Back</a>
+    <h1>ContentCraft</h1>
+  </nav>
+
+  <!-- Competitor Section -->
+  <section class="demo-section competitors-demo">
+    <h2>Competitors Edge</h2>
+    <div class="competitor-cards">
+      <div class="compet-card">
+        <h3>Creator A</h3>
+        <p><strong>Subscribers:</strong> 1.2M</p>
+        <p><strong>Total Views:</strong> 45M</p>
+        <p><strong>Videos:</strong> 320</p>
+        <button class="visit-btn">Visit Channel</button>
+      </div>
+      <div class="competitor-card">
+        <h3>Creator B</h3>
+        <p><strong>Subscribers:</strong> 980K</p>
+        <p><strong>Total Views:</strong> 38M</p>
+        <p><strong>Videos:</strong> 280</p>
+        <button class="visit-btn">Visit Channel</button>
+      </div>
+      <div class="competitor-card">
+        <h3>Creator C</h3>
+        <p><strong>Subscribers:</strong> 850K</p>
+        <p><strong>Total Views:</strong> 25M</p>
+        <p><strong>Videos:</strong> 190</p>
+        <button class="visit-btn">Visit Channel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Preferences Section -->
+  <section class="demo-section preferences-demo">
+    <h2>🌎 Explore by Niche & Region</h2>
+    <p class="note">Instead of selecting, results cycle automatically 👇</p>
+    <div class="preferences-cards">
+      <div class="pref-card fade-cycle">
+        <h3>Gaming - US</h3>
+        <p><strong>Top Channel:</strong> GamerPro</p>
+        <p>Subscribers: 2.1M</p>
+      </div>
+      <div class="pref-card fade-cycle">
+        <h3>Cooking - UK</h3>
+        <p><strong>Top Channel:</strong> ChefMagic</p>
+        <p>Subscribers: 1.4M</p>
+      </div>
+      <div class="pref-card fade-cycle">
+        <h3>Tech - Pakistan</h3>
+        <p><strong>Top Channel:</strong> TechGuru</p>
+        <p>Subscribers: 3.2M</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="demo-cta">
+    <h2>Ready to Unlock Real Insights?</h2>
+    <p>Link your channel to access <strong>real competitor tracking</strong> and <strong>personalized niche analysis</strong>.</p>
+    <a href="login.html" class="cta-btn">Get Started</a>
+  </section>
+
+  <script>
+    // Cycle fade animation for preferences demo
+    const cards = document.querySelectorAll(".fade-cycle");
+    let current = 0;
+
+    function cycleCards() {
+      cards.forEach((c, i) => {
+        c.style.display = i === current ? "block" : "none";
+      });
+      current = (current + 1) % cards.length;
+    }
+
+    cycleCards();
+    setInterval(cycleCards, 3000); // change every 3s
+  </script>
+
+</body>
+</html>

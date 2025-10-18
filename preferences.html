@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preferences | ContentCraft</title>
+
+  <!-- link this file as shown (create css/preferences.css) -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+ <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
+    </div>
+     <nav class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html">Reminders</a>
+    </nav>
+  </header>
+
+
+  <!-- Page wrapper -->
+  <main class="cc-pref-wrapper">
+
+    <!-- two-column layout: left (info + chips), right (form) -->
+    <div class="cc-pref-grid">
+
+      <!-- LEFT: Info / quick pick chips -->
+      <section class="cc-left">
+        <h1 class="cc-title"> Set Your Preferences</h1>
+        <p class="cc-sub">
+          Choose a domain, pick a sub-niche and region to get tailored competitor insights.
+          Tip: click any chip to quickly choose that domain.
+        </p>
+
+        <div class="cc-quick">
+          <h4>Popular domains</h4>
+          <div class="cc-chips" id="domainChips">
+            <button type="button" class="cc-chip" data-domain="Gaming">Gaming</button>
+            <button type="button" class="cc-chip" data-domain="Technology">Technology</button>
+            <button type="button" class="cc-chip" data-domain="Education">Education</button>
+            <button type="button" class="cc-chip" data-domain="Sports">Sports</button>
+            <button type="button" class="cc-chip" data-domain="Entertainment">Entertainment</button>
+            <button type="button" class="cc-chip" data-domain="Lifestyle">Lifestyle</button>
+            <button type="button" class="cc-chip" data-domain="Music">Music</button>
+            <button type="button" class="cc-chip" data-domain="Food">Food</button>
+            <button type="button" class="cc-chip" data-domain="Business & Finance">Business</button>
+            <button type="button" class="cc-chip" data-domain="News & Current Affairs">News</button>
+          </div>
+        </div>
+
+        <div class="cc-notes">
+          <p><strong>Why set preferences?</strong> We use this to show top competitors, trending content suggestions and regional insights tailored to your niche.</p>
+        </div>
+      </section>
+
+      <!-- RIGHT: Form card -->
+      <section class="cc-right">
+        <form id="cc-pref-form" class="cc-form" onsubmit="event.preventDefault(); submitPreferences();">
+          <div class="cc-form-row">
+            <label for="nicheDomain">Domain</label>
+            <select id="nicheDomain" name="nicheDomain" onchange="populateSubNiches()" required>
+              <option value="">— Select domain —</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Technology">Technology</option>
+              <option value="Education">Education</option>
+              <option value="Sports">Sports</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Lifestyle">Lifestyle</option>
+              <option value="Music">Music</option>
+              <option value="Food">Food</option>
+              <option value="Business & Finance">Business & Finance</option>
+              <option value="News & Current Affairs">News & Current Affairs</option>
+            </select>
+          </div>
+
+          <div class="cc-form-row">
+            <label for="niche">Sub-niche</label>
+            <select id="niche" name="niche" required>
+              <option value="">— Select sub-niche —</option>
+            </select>
+          </div>
+
+          <div class="cc-form-row">
+            <label for="region">Region</label>
+            <select id="region" name="region" required>
+              <option value="">— Select region —</option>
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>India</option>
+              <option>Pakistan</option>
+              <option>Korea</option>
+              <option>Turkey</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="cc-form-actions">
+            <button type="submit" class="cc-btn">Get Content</button>
+            <p id="statusMessage" class="cc-status" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <!-- Script: sub-niches, chips & submit (keeps your same fetch/localStorage logic) -->
+  <script>
+    // Sub-niches per domain (kept reasonably complete)
+    const subNiches = {
+      "Gaming": ["PC Gaming", "Console Gaming", "Mobile Gaming", "eSports", "Game Reviews", "Walkthroughs"],
+      "Technology": ["Tech Reviews", "Unboxings", "Smartphones", "Laptops", "Software Tutorials", "AI/ML"],
+      "Education": ["Online Learning", "Coding/Programming", "Science", "History", "Language Learning", "Exam Prep"],
+      "Sports": ["Cricket", "Football", "Basketball", "Tennis", "Formula 1", "Fitness"],
+      "Entertainment": ["Movies", "TV Shows", "Stand-up Comedy", "Reaction Videos", "Web Series"],
+      "Lifestyle": ["Travel", "Fashion", "Beauty", "Health", "Daily Vlogs", "Minimalism"],
+      "Music": ["Covers", "Original Songs", "Instrumentals", "Remixes", "Music Reviews"],
+      "Food": ["Cooking Tutorials", "Street Food", "Restaurant Reviews", "Baking", "Food Challenges"],
+      "Business & Finance": ["Stock Market", "Crypto", "Entrepreneurship", "Productivity", "Personal Finance"],
+      "News & Current Affairs": ["Politics", "World News", "Tech News", "Sports News", "Local Updates"]
+    };
+
+    function populateSubNiches() {
+      const domain = document.getElementById("nicheDomain").value;
+      const subNicheDropdown = document.getElementById("niche");
+      // reset
+      subNicheDropdown.innerHTML = '<option value="">— Select sub-niche —</option>';
+
+      if (domain && subNiches[domain]) {
+        subNiches[domain].forEach(sn => {
+          const option = document.createElement("option");
+          option.value = sn;
+          option.textContent = sn;
+          subNicheDropdown.appendChild(option);
+        });
+      }
+    }
+
+    // quick chips: clicking a domain chip selects domain + populates sub-niches
+    document.addEventListener('DOMContentLoaded', () => {
+      const chips = document.querySelectorAll('.cc-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          // set active style
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+
+          // set select and populate
+          const domain = chip.dataset.domain;
+          const domSelect = document.getElementById('nicheDomain');
+          domSelect.value = domain;
+          populateSubNiches();
+
+          // optionally focus sub-niche
+          setTimeout(() => document.getElementById('niche').focus(), 80);
+        });
+      });
+
+      // defensive: if user navigates here with a domain already set, populate sub-niches
+      if (document.getElementById('nicheDomain').value) populateSubNiches();
+    });
+
+    async function submitPreferences() {
+      const niche = document.getElementById('niche').value;
+      const region = document.getElementById('region').value;
+      const status = document.getElementById('statusMessage');
+
+      if (!niche || !region) {
+        status.textContent = "❗ Please choose both sub-niche and region.";
+        status.style.color = "#b45ca8";
+        return;
+      }
+
+      status.textContent = "🔍 Finding competitors based on preferences...";
+      status.style.color = "#6a4e9f";
+
+      try {
+        const response = await fetch("http://localhost:3000/find-competitors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ niche, region })
+        });
+
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Failed to find competitors");
+
+        // store and navigate
+        localStorage.setItem("competitorData", JSON.stringify(result.competitors || []));
+        status.textContent = "✅ Competitors found!";
+        setTimeout(() => { window.location.href = 'competitors.html'; }, 1200);
+      } catch (err) {
+        console.error(err);
+        status.textContent = "❌ Error: " + (err.message || "Server error");
+        status.style.color = "#d9534f";
+      }
+    }
+  </script>
+</body>
+</html>

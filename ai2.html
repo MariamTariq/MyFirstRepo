@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Assistance</title>
+  <link rel="stylesheet" href="css/style.css"> <!-- External CSS file -->
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
+    </div>
+    <nav class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html">Reminders</a>
+    </nav>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Handle for toggling -->
+    <div class="sidebar-handle" onclick="toggleSidebar()">&#8250;</div>
+
+    <h3>📂 Saved Content</h3>
+    <button class="save-btn" onclick="saveContent()">➕ Save Current</button>
+    <a href="saved.html" class="view-saved">📑 View Your Saved Content</a>
+    <ul id="savedList">
+      <li>No saved items yet.</li>
+    </ul>
+  </aside>
+
+  <!-- Page Content -->
+  <div class="main-content">
+    <!-- Trending Suggestions -->
+    <main class="container">
+      <div class="trending-section">
+        <h2>Trending Content Suggestions</h2>
+        <div class="trending-cards" id="trendingCards">
+          <div class="card">How to grow your channel in 2025</div>
+          <div class="card">Top 10 video editing tricks</div>
+          <div class="card">AI tools every creator must know</div>
+          <div class="card">Best strategies for YouTube Shorts</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Search Section -->
+    <main class="container">
+      <h2 class="section-title">From Idea to Impact ➔ AI Got You.</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Search trending topics or context..." id="searchInput" />
+      </div>
+      <button onclick="searchContent()">Search</button>
+    </main>
+
+    <!-- Script Writing -->
+    <main class="container">
+      <div class="script-section">
+        <h2>✍️ Script Writing Assistant</h2>
+        <textarea class="script-box" id="scriptBox"
+          placeholder="Write or generate your video script here..."></textarea>
+        <br />
+        <button onclick="generateScript()">Generate Script</button>
+      </div>
+    </main>
+
+    <!-- Text to Audio -->
+    <main class="container">
+      <div class="audio-section">
+        <h2>🎙️ Convert Text to Audio</h2>
+        <button onclick="convertToAudio()">Convert & Play</button>
+        <audio id="audioPlayer" controls></audio>
+      </div>
+    </main>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Sidebar toggle
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+
+    async function searchContent() {
+      const query = document.getElementById("searchInput").value.trim();
+      const contextContainer = document.getElementById("contextContainer");
+      const contextResult = document.getElementById("contextResult");
+
+      if (query === "") {
+        alert("Please enter a search term!");
+        return;
+      }
+
+      contextContainer.style.display = "block";
+      contextResult.innerHTML = "⏳ Searching for context...";
+
+      try {
+        const response = await fetch("http://localhost:5000/api/ai/find-context", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: query }),
+        });
+
+        const data = await response.json();
+        contextResult.innerHTML = data.reply || "⚠️ No context found.";
+      } catch (error) {
+        console.error(error);
+        contextResult.innerHTML = "⚠️ Error fetching context. Check server connection.";
+      }
+    }
+
+
+
+    function generateScript() {
+      const scriptBox = document.getElementById("scriptBox");
+      scriptBox.value = "Here’s a sample generated script: Welcome back to my channel! Today, we’ll explore the best AI tools that can help you create amazing content faster and smarter...";
+    }
+
+    function convertToAudio() {
+      const text = document.getElementById("scriptBox").value;
+      if (!text) {
+        alert("Please enter or generate some text first!");
+        return;
+      }
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = "en-US";
+      window.speechSynthesis.speak(speech);
+      document.getElementById("audioPlayer").src = "";
+      alert("Playing audio using browser's text-to-speech!");
+    }
+
+    // Save function (temporary preview in sidebar list)
+    function saveContent() {
+      const script = document.getElementById("scriptBox").value;
+      const list = document.getElementById("savedList");
+      if (!script.trim()) {
+        alert("Write or generate something to save first!");
+        return;
+      }
+      if (list.children[0] && list.children[0].innerText.includes("No saved")) {
+        list.innerHTML = "";
+      }
+      const li = document.createElement("li");
+      li.textContent = script.substring(0, 40) + "...";
+      list.appendChild(li);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Content</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Podzest</h2>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="ai.html">AI Tools</a></li>
+        <li><a href="competitors.html">Competitors</a></li>
+        <li><a href="preferences.html">Preferences</a></li>
+        <li><a href="saved.html" class="active">📂 Saved Content</a></li>
+      </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <h1>Your Saved Content</h1>
+      <div id="savedContainer" class="grid-cards"></div>
+    </div>
+  </div>
+
+  <script>
+    function loadSavedContent() {
+      let saved = JSON.parse(localStorage.getItem("savedContent")) || [];
+      let container = document.getElementById("savedContainer");
+      container.innerHTML = "";
+
+      if (saved.length === 0) {
+        container.innerHTML = "<p>No saved content yet.</p>";
+        return;
+      }
+
+      saved.forEach((item, index) => {
+        let card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h3>${item.title}</h3>
+          <p><strong>Date:</strong> ${item.date}</p>
+          <p>${item.script.substring(0, 150)}...</p>
+          ${item.audio ? `<audio controls src="${item.audio}"></audio>` : ""}
+          <button class="delete-btn" onclick="deleteContent(${index})">🗑 Delete</button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function deleteContent(index) {
+      let saved = JSON.parse(localStorage.getItem("savedContent")) || [];
+      saved.splice(index, 1);
+      localStorage.setItem("savedContent", JSON.stringify(saved));
+      loadSavedContent();
+    }
+
+    window.onload = loadSavedContent;
+  </script>
+</body>
+</html>

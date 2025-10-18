@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goals</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
+    </div>
+     <nav class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html" class="active">Reminders</a>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main class="container">
+    <h2>Your Goals & Reminders</h2>
+    <div class="goals-grid">
+
+      <!-- Subscribers Goal -->
+      <div class="goal-card">
+        <h3>Subscribers Goal</h3>
+        <label>Target Subscribers:</label>
+        <input type="number" id="subsTarget" placeholder="e.g. 100" />
+        
+        <label>Timeframe (weeks/months):</label>
+        <input type="text" id="subsTime" placeholder="e.g. 1 month" />
+
+        <button class="set-btn" onclick="setGoal('subs')">Set Goal</button>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="subs-progress"></div>
+        </div>
+        <p id="subs-text">0% completed</p>
+      </div>
+
+      <!-- Videos Goal -->
+      <div class="goal-card">
+        <h3>Videos Goal</h3>
+        <label>Target Videos:</label>
+        <input type="number" id="videosTarget" placeholder="e.g. 5" />
+        
+        <label>Timeframe (weeks/months):</label>
+        <input type="text" id="videosTime" placeholder="e.g. 2 weeks" />
+
+        <button class="set-btn" onclick="setGoal('videos')">Set Goal</button>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="videos-progress"></div>
+        </div>
+        <p id="videos-text">0% completed</p>
+      </div>
+
+      <!-- Views Goal -->
+      <div class="goal-card">
+        <h3>Views Goal</h3>
+        <label>Target Views:</label>
+        <input type="number" id="viewsTarget" placeholder="e.g. 500" />
+        
+        <label>Timeframe (weeks/months):</label>
+        <input type="text" id="viewsTime" placeholder="e.g. 1 week" />
+
+        <button class="set-btn" onclick="setGoal('views')">Set Goal</button>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="views-progress"></div>
+        </div>
+        <p id="views-text">0% completed</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Update progress bar
+    function updateProgress(id, percent) {
+      const fill = document.getElementById(id + "-progress");
+      const text = document.getElementById(id + "-text");
+      fill.style.width = percent + "%";
+      text.innerText = percent + "% completed";
+    }
+
+    // Handle setting goals
+    function setGoal(type) {
+      let target = document.getElementById(type + "Target").value;
+      let time = document.getElementById(type + "Time").value;
+
+      if (!target || !time) {
+        alert("⚠️ Please enter both target and timeframe.");
+        return;
+      }
+
+      alert(`✅ ${type.charAt(0).toUpperCase() + type.slice(1)} Goal Set!\nTarget: ${target}\nTimeframe: ${time}`);
+
+      // Demo: Assume current = 0 and progress is 0%
+      updateProgress(type, 0);
+    }
+
+    // Demo auto progress update (mock)
+    setTimeout(() => updateProgress("subs", 40), 2000);
+    setTimeout(() => updateProgress("videos", 70), 3000);
+    setTimeout(() => updateProgress("views", 20), 4000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | ContentCraft</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Include Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- AOS Library CSS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
+    </div>
+     <nav class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html">Reminders</a>
+    </nav>
+  </header>
+
+
+  <!-- Dashboard Layout -->
+  <main class="dashboard-layout">
+    <!-- Left/Main Performance -->
+     <div class="dashboard-grid">
+
+  <!-- LEFT SIDE -->
+  <div class="dashboard-left">
+    <section class="dashboard-main" data-aos="fade-up">
+      <h2 class="dashboard-heading">📈 Your Channel Performance</h2>
+      <div class="dashboard-card">
+        <h3 id="channelName">Channel: Loading...</h3>
+        <p id="subscribers">Subscribers: <strong>Loading...</strong></p>
+        <p id="videos">Videos: <strong>Loading...</strong></p>
+        <p id="totalViews">Total Views: <strong>Loading...</strong></p>
+      </div>
+      <div class="dashboard-card">
+        <h3>Engagement Growth (30 Days)</h3>
+        <canvas id="growthChart"></canvas>
+      </div>
+      <div class="dashboard-card">
+        <h3>Top Performing Videos</h3>
+        <div class="video-item">
+          <img src="https://img.youtube.com/vi/AFYJfMpwE6g/hqdefault.jpg" alt="MKBHD - Tesla Phone" class="video-thumb">
+          <div class="video-info">
+            <h4>MKBHD – Could Tesla Actually Make a Phone?</h4>
+            <p>Views: 9.8M | Likes: 400K</p>
+          </div>
+        </div>
+        <div class="video-item">
+          <img src="https://img.youtube.com/vi/X3PA8b8x4-A/hqdefault.jpg" alt="Veritasium - Optical Fiber" class="video-thumb">
+          <div class="video-info">
+            <h4>Veritasium – How Optical Fiber Works</h4>
+            <p>Views: 12M | Likes: 620K</p>
+          </div>
+        </div>
+        <div class="video-item">
+          <img src="https://img.youtube.com/vi/FZ8bz2E3CnE/hqdefault.jpg" alt="Linus Tech Tips" class="video-thumb">
+          <div class="video-info">
+            <h4>Linus Tech Tips – Fixing the World’s Worst Gaming Setup</h4>
+            <p>Views: 10M | Likes: 510K</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <!-- Right/AI  -->
+   <div class="dashboard-right">
+    <aside class="dashboard-side" data-aos="fade-left">
+      <h3>✨ Start Creating</h3>
+      <p>Leverage AI to get content ideas, write scripts, and set reminders to stay consistent.</p>
+      <a href="ai.html" class="cta-button">Go to AI</a>
+    </aside>
+
+    <!-- Bottom/Add Channel -->
+     <section class="dashboard-bottom" data-aos="fade-right">
+      <h3>➕ Add Another Channel</h3>
+      <p>Want to track multiple channels? Add a new one now.</p>
+      <form class="add-channel-form">
+        <input type="text" placeholder="Enter Channel URL or ID" required>
+        <button type="submit" class="cta-button">Add</button>
+      </form>
+    </section>
+    </div>
+    </div>
+  </main>
+
+  <!-- Chart.js Graph -->
+  <script>
+    var growthData = {
+      labels: ["1", "2", "3", "4", "5", "6", "7"],
+      datasets: [{
+        label: 'Engagement Growth',
+        data: [12, 14, 16, 17, 19, 22, 24],
+        fill: false,
+        borderColor: 'rgb(255, 99, 132)',
+        tension: 0.1
+      }]
+    };
+
+    var ctx = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: growthData,
+      options: { responsive: true }
+    });
+  </script>
+
+  <!-- YouTube Stats -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const channelData = JSON.parse(localStorage.getItem('channelData'));
+      if (!channelData) {
+        alert("Channel data not found. Please set your preferences first.");
+        return;
+      }
+      document.getElementById('channelName').textContent = `Channel: ${channelData.title}`;
+      document.getElementById('subscribers').innerHTML = `Subscribers: <strong>${Number(channelData.subscribers).toLocaleString()}</strong>`;
+      document.getElementById('videos').innerHTML = `Videos: <strong>${channelData.videos}</strong>`;
+      document.getElementById('totalViews').innerHTML = `Total Views: <strong>${Number(channelData.views).toLocaleString()}</strong>`;
+    });
+  </script>
+
+  <!-- AOS Animations -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+</body>
+</html>

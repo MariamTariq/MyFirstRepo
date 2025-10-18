@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Competitors | CreatorTrack</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
+    </div>
+     <nav class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html">Reminders</a>
+    </nav>
+  </header>
+
+    <!-- Competitor Insights Section -->
+    <main class="competitor-section">
+        <h2 class="section-title">🆚 Competitor Insights</h2>
+
+        <!-- Competitor List -->
+        <div class="competitor-list" id="competitorList">
+            <!-- Competitor Cards will be injected here dynamically -->
+        </div>
+    </main>
+
+    <script>
+        window.onload = () => {
+            const competitors = JSON.parse(localStorage.getItem('competitorData'));
+            const container = document.getElementById('competitorList');
+
+            if (!competitors || competitors.length === 0) {
+                container.innerHTML = "<p>❌ No competitors found.</p>";
+                return;
+            }
+
+            container.innerHTML = "";
+
+            competitors.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = "competitor-card";
+
+                card.innerHTML = `
+        <img src="${channel.thumbnails?.medium?.url || 'assets/placeholder.png'}" alt="${channel.title}" />
+        <h3>${channel.title}</h3>
+        <p><strong>Subscribers:</strong> ${parseInt(channel.subscribers).toLocaleString()}</p>
+        <p><strong>Views:</strong> ${parseInt(channel.views).toLocaleString()}</p>
+        <p><strong>Videos:</strong> ${channel.videos}</p>
+        <a href="https://www.youtube.com/channel/${channel.channel_id}" target="_blank">📺 Visit Channel</a>
+      `;
+
+                container.appendChild(card);
+            });
+        };
+    </script>
+
+</body>
+
+</html>

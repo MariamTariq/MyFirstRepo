@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grow Smarter — Demo | ContentCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">ContentCraft</div>
+    <nav>
+      <a href="intro.html">← Back</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <section class="dash-hero">
+      <h1>Grow Smarter — Demo Dashboard</h1>
+      <p class="lead">This is a dummy view to show how ContentCraft surfaces the key insights creators need.</p>
+    </section>
+
+    <section class="cards" data-block>
+      <article class="stat-card" data-animate>
+        <div class="stat-label">Subscribers</div>
+        <div class="stat-value" data-target="12450">0</div>
+        <div class="stat-change">+2.4% last 7d</div>
+      </article>
+
+      <article class="stat-card" data-animate>
+        <div class="stat-label">Total Views</div>
+        <div class="stat-value" data-target="1200000">0</div>
+        <div class="stat-change">+8.1% last 7d</div>
+      </article>
+
+      <article class="stat-card" data-animate>
+        <div class="stat-label">Videos</div>
+        <div class="stat-value" data-target="340">0</div>
+        <div class="stat-change">+1 new this month</div>
+      </article>
+
+      <article class="stat-card" data-animate>
+        <div class="stat-label">Engagement</div>
+        <div class="stat-value" data-target="7.8">0%</div>
+        <div class="stat-change">Avg watch time ↑</div>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <div class="panel" data-animate>
+        <h2>Trending Content</h2>
+        <div class="trend-list">
+          <div class="trend">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">10 Tips to Grow Fast</div>
+              <div class="meta-small">Estimated reach: 85k</div>
+            </div>
+            <div class="badge">Hot</div>
+          </div>
+
+          <div class="trend">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">AI Tools for Creators</div>
+              <div class="meta-small">Estimated reach: 54k</div>
+            </div>
+            <div class="badge">Rising</div>
+          </div>
+
+          <div class="trend">
+            <div class="thumb"></div>
+            <div class="meta">
+              <div class="title">Shorts Ideas 2025</div>
+              <div class="meta-small">Estimated reach: 70k</div>
+            </div>
+            <div class="badge">New</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" data-animate>
+        <h2>Top Performing Videos</h2>
+        <ol class="top-videos">
+          <li>
+            <div class="tv-left">
+              <div class="tv-thumb"></div>
+              <div>
+                <div class="tv-title">How to Edit Videos Faster</div>
+                <div class="tv-sub">350k views • 28k likes</div>
+              </div>
+            </div>
+            <div class="tv-stats">350k</div>
+          </li>
+
+          <li>
+            <div class="tv-left">
+              <div class="tv-thumb"></div>
+              <div>
+                <div class="tv-title">YouTube Growth Hacks 2025</div>
+                <div class="tv-sub">220k views • 14k likes</div>
+              </div>
+            </div>
+            <div class="tv-stats">220k</div>
+          </li>
+
+          <li>
+            <div class="tv-left">
+              <div class="tv-thumb"></div>
+              <div>
+                <div class="tv-title">Best Cameras for Beginners</div>
+                <div class="tv-sub">180k views • 9k likes</div>
+              </div>
+            </div>
+            <div class="tv-stats">180k</div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="help" data-animate>
+      <h2>How this helps creators</h2>
+      <ul>
+        <li>See signal — Subscribers, views and engagement in one glance.</li>
+        <li>Spot trends and plan content around trending topics.</li>
+        <li>Understand top performers and replicate what works.</li>
+        <li>Simple, actionable stats so you spend time creating, not guessing.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // count-up animation for stat numbers
+    function animateCount(el, target, opts = {}) {
+      const duration = opts.duration || 1400;
+      const start = 0;
+      const startTime = performance.now();
+      const isFloat = String(target).includes('.') || target < 1000 && target !== Math.round(target);
+
+      function frame(time) {
+        const progress = Math.min((time - startTime) / duration, 1);
+        const value = start + (target - start) * easeOutCubic(progress);
+        el.textContent = isFloat ? (value.toFixed(1)) : Math.round(value).toLocaleString();
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    function easeOutCubic(t) { return (--t) * t * t + 1; }
+
+    // trigger animations when in view, and allow repeated triggers
+    const observers = [];
+    document.querySelectorAll('[data-animate]').forEach((node) => {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            node.classList.add('visible');
+            // if node is a stat-card section, animate the numbers once per entry intersection
+            if (node.matches('.cards') || node.closest('.cards') ) {
+              document.querySelectorAll('.stat-card .stat-value, .stat-card[data-animate] .stat-value').forEach(() => {});
+            }
+            // animate numbers within this block
+            node.querySelectorAll('.stat-value').forEach(el => {
+              const target = parseFloat(el.getAttribute('data-target')) || 0;
+              // avoid rerunning for the same element if already has data-done
+              if (!el.dataset.animated) {
+                animateCount(el, target, { duration: 1400 });
+                el.dataset.animated = 'true';
+              }
+            });
+            // re-allow repeated animations by removing 'visible' on exit (we'll leave numeric results)
+          } else {
+            // allow classes to remove so on re-enter animation replays (but keep numbers)
+            node.classList.remove('visible');
+            // clear animated flags to replay count when re-entered
+            node.querySelectorAll('.stat-value').forEach(el => {
+              el.dataset.animated = '';
+              // optionally reset shown value to 0 to show counting again:
+              el.textContent = '0';
+            });
+          }
+        });
+      }, { threshold: 0.25 });
+      obs.observe(node);
+      observers.push(obs);
+    });
+
+    // initial animate for stat cards on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.stat-value').forEach(el => el.textContent = '0');
+    });
+  </script>
+
+</body>
+</html>

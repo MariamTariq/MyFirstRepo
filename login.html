@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Signup | ContentCraft</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+   <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="ContentCraft" />
+      <span>ContentCraft</span>
+    </div>
+     <nav class="nav-links">
+      <a href="login.html" class="active">Login</a>
+      <a href="index.html">Welcome</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="competitors.html">Competitors</a>
+      <a href="preferences.html">Preferences</a>
+      <a href="ai.html">AI</a>
+      <a href="goals.html">Reminders</a>
+    </nav>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <h2 id="form-title">Login</h2>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+
+        <div class="extras">
+          <label><input type="checkbox">Remember Me</label>
+        </div>
+        <a href="#" class="forgot">Forgot Password?</a>
+
+        <button type="submit">Login</button>
+        <p class="switch">Don’t have an account? 
+          <a href="#" onclick="showSignup()">Sign Up</a>
+        </p>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <input type="password" placeholder="Confirm Password" required>
+
+        <button type="submit">Sign Up</button>
+        <p class="switch">Already have an account? 
+          <a href="#" onclick="showLogin()">Login</a>
+        </p>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    function showSignup() {
+      document.getElementById("login-form").classList.remove("active");
+      document.getElementById("signup-form").classList.add("active");
+      document.getElementById("form-title").innerText = "Sign Up";
+    }
+
+    function showLogin() {
+      document.getElementById("signup-form").classList.remove("active");
+      document.getElementById("login-form").classList.add("active");
+      document.getElementById("form-title").innerText = "Login";
+    }
+  </script>
+</body>
+</html>

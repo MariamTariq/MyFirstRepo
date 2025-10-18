@@ -8,7 +8,7 @@
   
   body {
     background-color: #fdedb6;
-    color: #333;
+    color: #dda948;
     line-height: 1.6;
   }
   
@@ -34,10 +34,11 @@
   z-index: 1000;
 }
 
+
 /* Logo */
 .nav-logo {
   display: flex;
-  align-items: center;
+  align-items: right;
   gap: 10px;
 }
 
@@ -114,22 +115,22 @@
     justify-content: center;
   }
   .card{
-    color:0 2px 10px rgba(165, 130, 172, 0.1);
+    color:0 2px 10px rgba(175, 75, 117, 0.89);
   }
   
   
   h2 {
     color: #A582AC;
-    text-align: center;
-    font-size: 34px;
+    text-align: left;
+    font-size: 100px;
     margin-bottom: 10px;
   }
   
   p {
-    color: #6A4E9F;
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 20px;
+    color: #8fe61d;
+    font-size: 199px;
+    text-align: left;
+    margin-bottom: 50px;
   }
   
   form {
@@ -149,11 +150,11 @@
   
   button {
     background-color: #883476; /* Royal Lavender */
-    color: white;
-    font-size: 16px;
+    color: rgb(168, 126, 126);
+    font-size: 50px;
     padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
+    border: yellowgreen;
+    border-radius: 20px;
     cursor: pointer;
     width: auto;
     margin-top: 20px;
@@ -182,8 +183,8 @@ html,body{height:100%}
 body{
   font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   margin:0;
-  background: linear-gradient(180deg, var(--bg-1), #fff);
-  color:#222;
+  background: linear-gradient(180deg, var(--bg-1), #e48080);
+  color:#d36262;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -206,10 +207,10 @@ body{
 
 /* LEFT column */
 .cc-left{
-  background: linear-gradient(180deg, rgba(154,77,139,0.04), rgba(106,78,159,0.02));
+  background: linear-gradient(180deg, rgba(172, 93, 156, 0.74), rgba(106,78,159,0.02));
   border-radius:14px;
   padding:28px;
-  box-shadow: 0 6px 20px rgba(106,78,159,0.04);
+  box-shadow: 0 6px 20px rgba(160, 87, 156, 0.04);
 }
 .cc-title{font-size:1.9rem;color:var(--primary);margin:0 0 8px}
 .cc-sub{color:var(--muted);line-height:1.5;margin-bottom:18px}
@@ -218,7 +219,7 @@ body{
 .cc-quick h4{margin:8px 0 10px;color:var(--primary);font-size:0.95rem}
 .cc-chips{display:flex;flex-wrap:wrap;gap:10px}
 .cc-chip{
-  background:#fff;border:1px solid rgba(106,78,159,0.08);
+  background:#fff;border:1px solid rgba(173, 98, 180, 0.08);
   padding:8px 12px;border-radius:999px;font-weight:600;color:var(--primary);
   cursor:pointer;transition:all .16s ease;box-shadow:0 2px 6px rgba(0,0,0,0.03);
 }
@@ -577,7 +578,7 @@ select::-ms-expand { display: auto; }
 
 body {
   background: #fefefe;
-  color: #222;
+  color: #cc5b5b;
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -586,50 +587,59 @@ body {
 .hero {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  text-align: center;
   justify-content: space-between;
   padding: 60px 10%;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #fff;
+  background: linear-gradient(135deg, #d44545, #8d8510, #d44545);
+  color: #b19371;
   min-height: 90vh;
   overflow: hidden;
 }
 
 .hero-text {
-  max-width: 50%;
+  max-width: 70%;
 }
 
 .hero-text h1 {
-  font-size: 2.8rem;
-  line-height: 1.2;
+  font-size: 4.0rem;
+  line-height: 1.6;
 }
 
 .hero-text span {
-  color: #ffe082;
+  color: #dfd43a;
 }
 
 .hero-text p {
-  margin: 20px 0;
-  font-size: 1.1rem;
-  color: #ffe082;
+  margin: 21px 0;
+  font-size: 1.9rem;
+  color: #e2cb84;
 }
 
 .cta-btn {
-  display: inline-block;
-  padding: 14px 28px;
-  background: #ffe082;
-  color: #3a004d;
+  display: ruby-base-container;
+  padding: 15px 28px;
+  background: #cab4a0;
+  color: #e2ee74;
   font-weight: 600;
   border-radius: 10px;
-  text-decoration: none;
+  text-decoration: teal;
   transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cta-btn:hover {
-  background: #ffd54f;
+  background: #d4a50a;
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
+.hero-header {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 15px;
+  margin-bottom: 30px;
 
+}
 .hero-img img {
   max-width: 400px;
   border-radius: 16px;
@@ -640,7 +650,7 @@ body {
 .hero-img img:hover {
   transform: scale(1.05) rotate(-1.5deg);
 }
-
+ 
 /* Features Sections */
 .features,
 .ftrs,

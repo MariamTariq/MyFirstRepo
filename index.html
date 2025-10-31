@@ -1,93 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | ContentCraft</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-logo">
-      <img src="assets/logo.png" alt="ContentCraft" />
-      <span style="font-size: 1.5rem; font-weight: 600;">ContentCraft</span>
-    </div>
-     <nav class="nav-links">
-      <a href="login.html">Login</a>
-      <a href="index.html">Welcome</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="competitors.html">Competitors</a>
-      <a href="preferences.html">Preferences</a>
-      <a href="ai.html">AI</a>
-      <a href="goals.html">Reminders</a>
-    </nav>
-  </header>
-
-  <main class="container">
-    <h2 class="section-title">Welcome, Content Creator!</h2>
-    <p>Add your YouTube Channel ID to get started. You can add multiple channels.</p>
-    <div class="card">
-      <label for="channelId">Enter Channel ID</label>
-      <input type="text" id="channelId" placeholder="UCxxxxxxxxxxxxx" />
-      
-
-      <p id="statusMessage" style="margin-top: 15px;"></p>
-      <button onclick="submitChannel()">Next</button>
-    </div>
-  </main>
-
-  <script>
-    // Function to add another input field for additional channels
-    async function addAnother() {
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.placeholder = 'UCxxxxxxxxxxxxx';
-      input.style.marginTop = '10px';
-      document.getElementById('extraChannels').appendChild(input);
-    }
-
-    // Function to handle channel submission
-    async function submitChannel() {
-      const mainInput = document.getElementById('channelId').value.trim();
-
-      if (!mainInput) {
-        alert("Please enter a channel ID.");
-        return;
-      }
-
-      try {
-        const response = await fetch('http://localhost:3000/channel-info', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ url: mainInput })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          // Store both main and competitors in localStorage
-          localStorage.setItem('channelData', JSON.stringify(result.main));
-          localStorage.setItem('competitorData', JSON.stringify(result.competitors));
-
-          // Redirect to the dashboard page
-          window.location.href = 'dashboard.html';
-        } else {
-          document.getElementById('statusMessage').textContent = "❌ Error: " + result.message;
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
-        document.getElementById('statusMessage').textContent = "❌ Network or server error.";
-      }
-    }
-
-    // Check if the channel data exists in localStorage and redirect to the dashboard if it does
-
-  </script>
-</body>
-
+<html>
+  <head>
+    <title>MyFirstRepo - Jenkins CI/CD</title>
+  </head>
+  <body>
+    <h1>Welcome to MyFirstRepo - Jenkins Integration</h1>
+    <p>This is a sample HTML file for Jenkins build testing.</p>
+  </body>
 </html>
